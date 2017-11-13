@@ -7,8 +7,13 @@ from secret import req
 
 import requests
 
+API_URL = 'https://api.github.com/'
+USERS = 'users/'
+
+
 def index(request):
-	return HttpResponse(req())
+	name = request.GET.get('name','blottn')
+	return HttpResponse(req(API_URL + USERS + name))
 
 def callback(request):
-	return HttpResponse('Successfully authenticated!')
+	return HttpResponse('Successfully authenticated! don\'t think this page is needed')
