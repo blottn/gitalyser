@@ -2,6 +2,7 @@
 	<title>Gitalysis</title>
 	<style>
 		.header {
+			font-family :Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
 			padding-top: 300px;
 			padding-bottom: 200px;
 			text-align: center;
@@ -10,7 +11,6 @@
 			width: 100%;
 		}
 		.body {
-			font-family :Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
 			background: #30203a;
 			border:0;
 			height: 100%;
@@ -30,12 +30,10 @@
 		<h1>Gitalyser</h1>
 		<h3>Want to know if you out-git someone? Find out below.</h3>
 	</div>
-
 	<div class="tailer">
-		<form action="/analysis/callback/" method="post"> {% csrf_token %}
-			<input type="text" name="uname" placeholder="username"/>
-			<br>
-			<input type="password" name="pw" placeholder="password"/>
+		<form action="/analysis/callback">
+			<input type="text" value="Person A"/>
+			<input type="text" value="Person B"/>
 			<br>
 			<input type="submit" value="Git gud"/>
 		</form>

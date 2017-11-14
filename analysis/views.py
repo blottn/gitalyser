@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from django.http import HttpResponse
 from secret import req
@@ -15,8 +16,19 @@ USERS = 'users/'
 #	name = request.GET.get('name','blottn')
 #	return HttpResponse(req(API_URL + USERS + name))
 
+@csrf_protect
 def index(request):
-	return HttpResponse(render(request,'analysis/index.html'))
+	c = {}
+	return HttpResponse(render(request,'analysis/index.html', c))
 
+@csrf_protect
+def login(request):
+	c = {}
+	return HttpResponse(render(request,'analysis/login.html', c))
+
+@csrf_protect
 def callback(request):
-	return HttpResponse('Successfully authenticated! don\'t think this page is needed')
+	c = {}
+	c['name'] = request.POST['uname']
+	c['pass'] = request.POST['pw']
+	return HttpResponse(render(request,'analysis/callback.html', c))
