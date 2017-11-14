@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from django.http import HttpResponse
-from secret import req
+from secret import req, getSecret, getId
 
 import requests
 
@@ -18,17 +18,11 @@ USERS = 'users/'
 
 @csrf_protect
 def index(request):
+	session_code = ''
+	if 'code' in request.GET:
+		session_code = request.GET['code']
 	c = {}
+	c['client_id']=getId()
+	c['valid']=True
+
 	return HttpResponse(render(request,'analysis/index.html', c))
-
-@csrf_protect
-def login(request):
-	c = {}
-	return HttpResponse(render(request,'analysis/login.html', c))
-
-@csrf_protect
-def callback(request):
-	c = {}
-	c['name'] = request.POST['uname']
-	c['pass'] = request.POST['pw']
-	return HttpResponse(render(request,'analysis/callback.html', c))

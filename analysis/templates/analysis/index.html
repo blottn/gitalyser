@@ -14,10 +14,10 @@
 			background: #30203a;
 			border:0;
 			height: 100%;
+			text-align: center;
 		}
 		.tailer {
 			font-family :Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
-			text-align: center;
 		}
 
 		input {
@@ -25,18 +25,26 @@
 		}
 	</style>
 </head>
-<div class="body">
-	<div class="header">
-		<h1>Gitalyser</h1>
-		<h3>Want to know if you out-git someone? Find out below.</h3>
-	</div>
+{% if valid %}
+{% include "analysis/stats.html"%}
+{% else %}
+<body style="margin: 0;">
+	<div class="body">
+		<div class="header">
+			<h1>Gitalyser</h1>
+			<h3>Want to know if you out-git someone? Find out below. {{ validated }}</h3>
+		</div>
 
-	<div class="tailer">
-		<form action="/analysis/callback/" method="post"> {% csrf_token %}
-			<input type="text" name="uname" placeholder="username"/>
-			<br>
-			<input type="password" name="pw" placeholder="password"/>
-			<br>
-			<input type="submit" value="Git gud"/>
-		</form>
+	<!--	<div class="tailer">
+			<form action="/analysis/callback/" method="post"> {% csrf_token %}
+				<input type="text" name="uname" placeholder="username"/>
+				<br>
+				<input type="password" name="pw" placeholder="password"/>
+				<br>
+				<input type="submit" value="Git gud"/>
+			</form>
+	</div>	-->
+		<a href="https://github.com/login/oauth/authorize?scope=user:email&client_id={{ client_id }}">Click here</a> to begin</a>
 	</div>
+</body>
+{% endif %}
