@@ -5,31 +5,32 @@
 			padding-top: 300px;
 			padding-bottom: 200px;
 			text-align: center;
-			color: white;
-			background: #2e2e4a;
-			width: 100%;
+			color: black;
+			background: #ffffff;
 		}
-		.body {
-			font-family :Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
-			background: #30203a;
-			border:0;
+		body {
+			font-family: Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+			background: #242938;
+			border: 0;
 			height: 100%;
 			text-align: center;
+			color: white;
 		}
 		.tailer {
-			font-family :Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+			font-family: Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
 		}
-
 		input {
 			margin-top: 8px;
 		}
+		a {
+			padding-top: 50px;
+		}
 	</style>
 </head>
-{% if valid %}
-{% include "analysis/stats.html"%}
+{% if code != ''%}
+	{% include "analysis/stats.html"%}
 {% else %}
 <body style="margin: 0;">
-	<div class="body">
 		<div class="header">
 			<h1>Gitalyser</h1>
 			<h3>Want to know if you out-git someone? Find out below. {{ validated }}</h3>
@@ -45,6 +46,5 @@
 			</form>
 	</div>	-->
 		<a href="https://github.com/login/oauth/authorize?scope=user:email&client_id={{ client_id }}">Click here</a> to begin</a>
-	</div>
 </body>
 {% endif %}
