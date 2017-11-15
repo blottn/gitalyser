@@ -23,6 +23,8 @@ def index(request):
 		session_code = request.GET['code']
 	c = {}
 	c['client_id']=getId()
-	c['valid']=True
+	c['code']=session_code
+	return render(request,'analysis/index.html', c)
 
-	return HttpResponse(render(request,'analysis/index.html', c))
+def stats(request):
+	return render(request,'analysis/stats.html')
