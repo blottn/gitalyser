@@ -10,17 +10,12 @@ from gitclient import *
 
 import requests
 import json
+import os
 API_URL = 'https://api.github.com/'
 USER = 'user/'
 
 access_token = '';
 
-
-#def index(request):
-#	name = request.GET.get('name','blottn')
-#	return HttpResponse(req(API_URL + USERS + name))
-
-@csrf_protect
 def index(request):
 	c = {}
 	c['code']=''
@@ -31,8 +26,17 @@ def index(request):
 		if access_token != 'Not Found':
 			u_data = get_user(access_token)
 			c['avatar']=u_data['avatar_url']
+			c['results']="hello from the other side"
 	c['client_id']=get_id()
 	return render(request,'analysis/index.html', c)
 
 def stats(request):
 	return render(request,'analysis/stats.html')
+
+@csrf_protect
+def js(request):
+	path = request.path_info[4:]
+	if "/" in path:
+		return HttpResponse("alert(\"Nice try!\");")
+	f = open("./analysis/static/js/" + path)
+	return HttpResponse(f)

@@ -19,5 +19,6 @@ from django.contrib import admin
 from analysis import views
 
 urlpatterns = [
-		url(r'^$',views.index, name='index'),
+	url(r'^$',views.index, name='index'),
+	url(r'^js/',views.js, name='javascript'),
 ]
