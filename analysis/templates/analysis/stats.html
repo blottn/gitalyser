@@ -36,14 +36,47 @@
 			border: 4px solid white;
 		}
 
+		table {
+			margin-left:15%;
+			margin-right:15%;
+			margin-top:6%;
+			text-align: left;
+			font-family: Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+			font-size: 25px;
+		}
+
+		td {
+			border: 5px solid white;
+			border-radius: 15px;
+			background: white;
+			color: black;
+			margin: 50px;
+		}
 	</style>
 </head>
 <body>
-		<div class="header">
-			{% if avatar %}
-			<img src="{{ avatar }}" alt="profile picture of user"/>
-			
-			{% endif %}
-			<h1>Here are some stats!</h1>
-		</div>
+	<div class="header">
+		{% if avatar %}
+		<img src="{{ avatar }}" alt="profile picture of user"/>	
+		<h1>Here are some stats!</h1>
+		{% else %}
+		<h1>Oops, something broke. Please verify that you have logged in.</h1>
+		{% endif %}
+	</div>
+	<div class="results">
+		{% if results %}
+		<table>
+			<tr>
+				<td>Repositories:</td>
+			</tr>
+			<tr>
+				<td>Commits:</td>
+			</tr>
+		</table>
+		<script src="https://d3js.org/d3.v4.min.js"></script>	<!-- only load d3 if we have stats to show -->
+		<script type="text/javascript" src="/js/stats.js"/></script>
+		{% else %}
+		<h1>No stats available</h1>
+		{% endif %}
+	</div>
 </body>
