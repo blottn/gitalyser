@@ -32,11 +32,3 @@ def index(request):
 
 def stats(request):
 	return render(request,'analysis/stats.html')
-
-@csrf_protect
-def js(request):
-	path = request.path_info[4:]
-	if "/" in path:
-		return HttpResponse("alert(\"Nice try!\");")
-	f = open("./analysis/static/js/" + path)
-	return HttpResponse(f)
