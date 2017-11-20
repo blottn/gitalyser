@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from django.http import HttpResponse
-from secret import req, get_secret, get_id
+from secret import *
 
 from gitclient import *
 
@@ -25,10 +25,14 @@ def index(request):
 		access_token = get_token(session_code)
 		if access_token != 'Not Found':
 			u_data = get_user(access_token)
+			repos = get_repos(access_token)
 			c['avatar']=u_data['avatar_url']
+			c['repos']=repos
 			c['results']="hello from the other side"
 	c['client_id']=get_id()
 	return render(request,'analysis/index.html', c)
 
 def stats(request):
 	return render(request,'analysis/stats.html')
+
+
