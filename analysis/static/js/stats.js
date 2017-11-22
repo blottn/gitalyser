@@ -4,9 +4,13 @@ var node = [];
 var width = 750;
 var height = 500;
 
+var time_week = 604800; //time in a week
+
 for (i = 0 ; i < repos.length ; i++) {
 	node[i] = {'time':Date.parse(repos[i].created_at),'count':i+1};
 }
+
+
 
 var delta = node[node.length - 1].time - node[0].time;
 var offset = node[0].time;
@@ -17,31 +21,27 @@ for (i = 0 ; i < node.length ; i++) {
     node[i].time = node[i].time * width;
 }
 
-console.log("delta: " + delta);
-for (i = 0 ; i < node.length ; i++) {
-    console.log(node[i].time);
-}
 
+graph("#repos", width, height, node, function(d) {return d.time;},function(d) {
+    return (height - (height * (d.count / node[node.length-1].count) / 2));
+});
 
-var svg = d3.select("#repos")
+function graph(id, w, h,  data, fx, fy) {
+
+    var svg = d3.select(id)
             .append("svg");
 
-svg.attr("width",width)
-   .attr("height",height);
+    var timeline = d3.line(node)
+	    .x(fx)
+	    .y(fy);
 
-var timeline = d3.line(node)
-	.x(function(d) {return d.time;})
-	.y(function(d) {return height - d.count;});
-
-
-var graph = svg.append("path")
-    //.interpolate("step-before")
-	.attr("d", timeline(node))
-	.attr("stroke","blue")
-	.attr("stroke-width",2)
-	.attr("fill","none");
-
-
-function graph(id, data, fx, fy) {
+    svg.attr("width",w)
+        .attr("height",h);
+   
+    var graph = svg.append("path")
+	    .attr("d", timeline(data))
+	    .attr("stroke","green")
+	    .attr("stroke-width",2)
+	    .attr("fill","none");
 
 }
