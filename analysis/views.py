@@ -22,10 +22,11 @@ def index(request):
 	if 'code' in request.GET:
 		session_code= request.GET['code']
 		c['code'] = session_code
-		access_token = get_token(session_code)
+		access_token = get_token(session_code)	#add redirect if no access_token acquired
 		if access_token != 'Not Found':
 			u_data = get_user(access_token)
 			repos = get_repos(access_token)
+			results = get_commits(access_token,u_data['login'])
 			c['avatar']=u_data['avatar_url']
 			c['repos']=repos
 			c['results']="hello from the other side"
