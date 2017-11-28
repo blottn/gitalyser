@@ -13,20 +13,27 @@
 		{% endif %}
 	</div>
 	<div class="results">
-		{% if results %}
+		{% if repos or commits %}
 		<table>
 			<tr>
 				<td id="repos"><p>Repositories:</p></td>
 			</tr>
 			<tr>
-				<td>Commits:</td>
+				<td id="commits"><p>Commits:</p></td>
 			</tr>
 		</table>
 		<script src="https://d3js.org/d3.v4.min.js"></script>	<!-- only load d3 if we have stats to show -->
+		{% if repos %}
 		<script type="text/javascript">var repos=JSON.parse('{{ repos|safe }}');</script>
+		{% endif %}
+
+		{% if commits %}
 		<script type="text/javascript">var commits=JSON.parse('{{ commits|safe}}');</script>
-	   	{% load static %}
+		{% endif %}
+	   	
+		{% load static %}
 		<script type="text/javascript" src="{% static "js/stats.js" %}"></script>
+		
 		{% else %}
 		<h1>No stats available</h1>
 		{% endif %}
