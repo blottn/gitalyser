@@ -13,7 +13,6 @@ for (i = 0 ; i < repos.length ; i++) {
 }
 
 for (i = 0 ; i < commits.length ; i++) {
-	console.log(commits[i]);
 	com_list[i] = {'time':commits[i],'count':i+1};
 }
 
@@ -27,13 +26,22 @@ for (i = 0 ; i < node.length ; i++) {
     node[i].time = node[i].time * width;
 }
 
-//var com_delta = com_list[com_list.length - 1].time - node[0].time;
+var com_delta = com_list[com_list.length - 1].time - com_list[0].time;
+var com_offset = com_list[0].time;
 
+for (i = 0 ; i < com_list.length ; i++) {
+	com_list[i].time = com_list[i].time - com_offset;
+	com_list[i].time = com_list[i].time / com_delta;
+	com_list[i].time = com_list[i].time * width;
+}
 
 graph("#repos", width, height, node, function(d) {return d.time;},function(d) {
     return (height - (height * (d.count / node[node.length-1].count) / 2));
 });
 
+graph("#commits", width, height, com_list, function(d) {return d.time;}, function(d) {
+    return (height - (height * (d.count / com_list[com_list.length-1].count) / 2));
+});
 
 function graph(id, w, h,  data, fx, fy) {
 

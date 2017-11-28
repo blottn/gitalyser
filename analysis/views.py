@@ -29,7 +29,9 @@ def index(request):
 			u_data = get_user(access_token)
 			repos = get_repos(access_token)
 			commits = dictify(get_commits(access_token,u_data['login']))
-			c['commits']=json.dumps(commits.keys())
+			keys = commits.keys()
+			keys.sort()
+			c['commits']=json.dumps(keys)
 			c['avatar']=u_data['avatar_url']
 			c['repos']=repos
 			c['results']="hello from the other side"
