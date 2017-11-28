@@ -11,6 +11,8 @@ from gitclient import *
 import requests
 import json
 import os
+from datetime import datetime
+
 API_URL = 'https://api.github.com/'
 USER = 'user/'
 
@@ -26,7 +28,8 @@ def index(request):
 		if access_token != 'Not Found':
 			u_data = get_user(access_token)
 			repos = get_repos(access_token)
-			results = get_commits(access_token,u_data['login'])
+			commits = dictify(get_commits(access_token,u_data['login']))
+			c['commits']=json.dumps(commits)
 			c['avatar']=u_data['avatar_url']
 			c['repos']=repos
 			c['results']="hello from the other side"
@@ -36,4 +39,16 @@ def index(request):
 def stats(request):
 	return render(request,'analysis/stats.html')
 
+fmt_string = '%Y-%m-%dT%H:%M:%SZ'
 
+
+#helper for sorting commits
+def dictify(commits):
+	out = {}
+	for commit in commits:
+		time = datetime.strptime(commit['commit']['committer']['date'],fmt_string).strftime('%s')
+		if time in out:
+			out[time] += 1
+		else:
+			out[time] = 1
+	return out

@@ -1,5 +1,5 @@
 repos = repos.reverse();
-
+console.log(commits);
 var node = [];
 var width = 750;
 var height = 500;

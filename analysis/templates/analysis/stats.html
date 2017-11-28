@@ -24,6 +24,7 @@
 		</table>
 		<script src="https://d3js.org/d3.v4.min.js"></script>	<!-- only load d3 if we have stats to show -->
 		<script type="text/javascript">var repos=JSON.parse('{{ repos|safe }}');</script>
+		<script type="text/javascript">var commits=JSON.parse('{{ commits|safe}}');</script>
 	   	{% load static %}
 		<script type="text/javascript" src="{% static "js/stats.js" %}"></script>
 		{% else %}
