@@ -47,3 +47,4 @@ def get_commits(access_token, repo, owner):
 	
 #get commits per repo
 def get_cpa(access_token, owner):
+	return 1
