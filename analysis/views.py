@@ -28,7 +28,7 @@ def index(request):
 		if access_token != 'Not Found':
 			u_data = get_user(access_token)
 			repos = get_repos(access_token)
-			commits = dictify(get_commits(access_token,u_data['login']))
+			commits = dictify(get_all_commits(access_token,u_data['login']))
 			keys = commits.keys()
 			keys.sort()
 			c['commits']=json.dumps(keys)

@@ -23,7 +23,7 @@ def get_repos(access_token):
 	repos = requests.get(REPOS_ENDPOINT,params=payload)
 	return repos.text
 
-def get_commits(access_token, u_name):
+def get_all_commits(access_token, u_name):
 	commits = []
 	payload = {'access_token':access_token}
 	for repo in json.loads(get_repos(access_token)):
@@ -32,3 +32,10 @@ def get_commits(access_token, u_name):
 										 ,params=payload).text);
 		commits += result
 	return commits
+
+def get_commits(access_token, repo, owner):
+	 payload = {'access_token':access_token}
+	 result = json.loads(requests.get(COMMITS_ENDPOINT + '/' + owner + '/' + repo + '/commits'
+		 								,params=payload).text);
+	 return result
+	
