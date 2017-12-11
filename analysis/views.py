@@ -24,17 +24,10 @@ def index(request):
 	if 'code' in request.GET:
 		session_code= request.GET['code']
 		c['code'] = session_code
-		access_token = get_token(session_code)	#add redirect if no access_token acquired
+		access_token = get_token(session_code)
+		u_data = get_user(access_token)
 		if access_token != 'Not Found':
-			u_data = get_user(access_token)
-			repos = get_repos(access_token)
-			commits = dictify(get_all_commits(access_token,u_data['login']))
-			keys = commits.keys()
-			keys.sort()
-			c['commits']=json.dumps(keys)
 			c['avatar']=u_data['avatar_url']
-			c['repos']=repos
-			c['results']="hello from the other side"
 	c['client_id']=get_id()
 	return render(request,'analysis/index.html', c)
 
@@ -42,8 +35,6 @@ def stats(request):
 	return render(request,'analysis/stats.html')
 
 fmt_string = '%Y-%m-%dT%H:%M:%SZ'
-
-
 #helper for sorting commits
 def dictify(commits):
 	out = {}
