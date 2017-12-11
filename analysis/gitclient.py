@@ -25,7 +25,7 @@ def get_user(access_token):
 def get_repos(access_token):
 	payload = {'access_token':access_token,'sort':'created'}
 	repos = requests.get(REPOS_ENDPOINT,params=payload)
-	return repos.text
+	return json.loads(repos.text)
 
 #get all commits to all repos
 def get_all_commits(access_token, u_name):

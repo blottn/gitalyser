@@ -21,14 +21,23 @@ access_token = '';
 def index(request):
 	c = {}
 	c['code']=''
+
 	if 'code' in request.GET:
+		
 		session_code= request.GET['code']
 		c['code'] = session_code
+		
 		access_token = get_token(session_code)
+		
 		u_data = get_user(access_token)
 		if access_token != 'Not Found':
 			c['avatar']=u_data['avatar_url']
+		repos = get_repos(access_token)
+		c['repos'] = []
+		for repo in repos:
+			c['repos'].append({'name':repo['name']})
 	c['client_id']=get_id()
+
 	return render(request,'analysis/index.html', c)
 
 def stats(request):
@@ -45,3 +54,6 @@ def dictify(commits):
 		else:
 			out[time] = 1
 	return out
+
+def leach(request):
+	return HttpResponse('hello leach!')
