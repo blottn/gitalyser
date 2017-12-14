@@ -21,4 +21,5 @@ from analysis import views
 urlpatterns = [
 	url(r'^$',views.index, name='index'),
 	url(r'^leach$', views.leach, name='leach'),
+	url(r'^signout$', views.signout, name='signout'),
 ]

@@ -18,7 +18,7 @@
 			{% for repo in repos %}
 			<tr>
 				<td>
-					<a href="http://127.0.0.1:8000/leach?repo={{repo.name}}">
+					<a class="repo" href="http://127.0.0.1:8000/leach?repo={{repo.name}}&owner={{repo.owner}}">
 					{{ repo.name }}
 					</a>
 				</td>
@@ -26,5 +26,8 @@
 			{% endfor %}
 			{% endif %}
 		</table>
+	</div>
+	<div class="footer">
+		<a href="/signout">Sign out</a>
 	</div>
 </body>

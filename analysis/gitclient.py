@@ -48,7 +48,10 @@ def get_commits(access_token, repo, owner):
 def get_contribs(access_token,owner,repo):
 	payload = {'access_token':access_token}
 	url = COMMITS_ENDPOINT + '/' + owner + '/' + repo + '/contributors'
+	print(url)
+	print(access_token)
 	result = json.loads(requests.get(url, params=payload).text)
+	print(result)
 	return result
 
 def is_leach(access_token, u_name):
@@ -66,6 +69,5 @@ def is_leach(access_token, u_name):
 		data = json.loads(requests.get(data_url, params=payload).text)
 		contribs += len(data)
 	
-	return (contribs / repo_count) > 10
+	return (contribs / repo_count) > 5
 
-	return True
