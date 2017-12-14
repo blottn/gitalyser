@@ -31,7 +31,10 @@ def index(request):
 		
 		u_data = get_user(access_token)
 		if access_token != 'Not Found':
+			request.session['tok'] = access_token
+
 			c['avatar']=u_data['avatar_url']
+		request.session['user'] = u_data['login']
 		repos = get_repos(access_token)
 		c['repos'] = []
 		for repo in repos:
@@ -56,4 +59,14 @@ def dictify(commits):
 	return out
 
 def leach(request):
-	return HttpResponse('hello leach!')
+	token = request.session['tok']
+	repo = request.GET['repo']
+	user = request.session['user']
+
+	context = {}
+	context['repo_name'] = repo
+	context['contributors'] = []
+	contribs = get_contribs(token,user,repo)
+	for contrib in contribs:
+		context['contributors'].append({'name':contrib['login'],'leach':is_leach(token,contrib['login'])})
+	return render(request,'analysis/leach.html',context)

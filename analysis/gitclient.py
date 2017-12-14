@@ -34,7 +34,7 @@ def get_all_commits(access_token, u_name):
 	for repo in json.loads(get_repos(access_token)):
 		name = repo['name']
 		result = json.loads(requests.get(COMMITS_ENDPOINT + '/' + u_name + '/' + name + '/commits'
-										 ,params=payload).text);
+										 ,params=payload).text)
 		commits += result
 	return commits
 
@@ -42,12 +42,30 @@ def get_all_commits(access_token, u_name):
 def get_commits(access_token, repo, owner):
 	 payload = {'access_token':access_token}
 	 result = json.loads(requests.get(COMMITS_ENDPOINT + '/' + owner + '/' + repo + '/commits'
-		 								,params=payload).text);
+		 								,params=payload).text)
 	 return result
-	
-#get commits per repo
-def get_cpa(access_token, owner):
-	return 1
 
-def leach(access_token, u_name):
+def get_contribs(access_token,owner,repo):
+	payload = {'access_token':access_token}
+	url = COMMITS_ENDPOINT + '/' + owner + '/' + repo + '/contributors'
+	result = json.loads(requests.get(url, params=payload).text)
+	return result
+
+def is_leach(access_token, u_name):
+	#get repos
+	payload = {'access_token':access_token,'type':'all'}
+	url = 'https://api.github.com/users/'+u_name+'/repos'
+	repos = json.loads(requests.get(url, params=payload).text)
+	repo_count = len(repos)
+	if repo_count == 0:
+		return False
+	contribs = 0
+	for repo in repos:
+		data_url = 'https://api.github.com/repos/' + repo['owner']['login'] + '/' + repo['name'] + '/commits'
+		payload = {'access_token':access_token,'author':u_name}
+		data = json.loads(requests.get(data_url, params=payload).text)
+		contribs += len(data)
+	
+	return (contribs / repo_count) > 10
+
 	return True

@@ -1,30 +1,27 @@
 <head>
-	<title>Gitalyser - Stats</title>
+	<title>Gitalyser</title>
 	{% load static %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/stats.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/leach.css" %} ">
 </head>
 <body>
 	<div class="header">
-		{% if avatar %}
-		<img src="{{ avatar }}" alt="profile picture of user"/>	
-		<h1>Here are some stats!</h1>
-		{% else %}
-		<h1>Oops, something broke. Please verify that you have logged in.</h1>
-		{% endif %}
+		<h1>Here are some stats for "{{ repo_name }}"</h1>
 	</div>
 	<div class="results">
+		{% if contributors %}
 		<table>
-			{% if repos %}
-			{% for repo in repos %}
+		{% for person in contributors %}
 			<tr>
-				<td>
-					<a href="http://127.0.0.1:8000/leach?repo={{repo.name}}">
-					{{ repo.name }}
-					</a>
-				</td>
+				{% if person.leach == True %}
+				<td style="color:red">{{person.name}}</td>
+				{% else %}
+				<td style="color:green">{{person.name}}</td>
+				{% endif %}
 			</tr>
-			{% endfor %}
-			{% endif %}
+		{% endfor %}
 		</table>
+		{% else %}
+		<h2>It seems there were no contributors for this repository</h2>
+		{% endif %}
 	</div>
 </body>

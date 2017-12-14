@@ -13,29 +13,18 @@
 		{% endif %}
 	</div>
 	<div class="results">
-		{% if repos or commits %}
 		<table>
+			{% if repos %}
+			{% for repo in repos %}
 			<tr>
-				<td id="repos"><p>Repositories:</p></td>
+				<td>
+					<a href="http://127.0.0.1:8000/leach?repo={{repo.name}}">
+					{{ repo.name }}
+					</a>
+				</td>
 			</tr>
-			<tr>
-				<td id="commits"><p>Commits:</p></td>
-			</tr>
+			{% endfor %}
+			{% endif %}
 		</table>
-		<script src="https://d3js.org/d3.v4.min.js"></script>	<!-- only load d3 if we have stats to show -->
-		{% if repos %}
-		<script type="text/javascript">var repos=JSON.parse('{{ repos|safe }}');</script>
-		{% endif %}
-
-		{% if commits %}
-		<script type="text/javascript">var commits=JSON.parse('{{ commits|safe}}');</script>
-		{% endif %}
-	   	
-		{% load static %}
-		<script type="text/javascript" src="{% static "js/stats.js" %}"></script>
-		
-		{% else %}
-		<h1>No stats available</h1>
-		{% endif %}
 	</div>
 </body>
