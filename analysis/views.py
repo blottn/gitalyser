@@ -85,7 +85,7 @@ def leach(request):
 	contribs = get_contribs(token,owner,repo)
 	for contrib in contribs:
 		cpr = get_cpr(token,contrib['login'])
-		context_contribs.append({'name':contrib['login'],'cpr':cpr})
+		context_contribs.append({'name':contrib['login'],'value':cpr})
 	context['contributors'] = json.dumps(context_contribs);
 	
 	return render(request,'analysis/leach.html',context)

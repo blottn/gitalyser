@@ -9,11 +9,21 @@
 	</div>
 	<div class="results">
 		{% if contributors %}
+		
+		<table>
+			<tr>
+				<td id="graph"></td>
+			</tr>
+		</table>
 
 		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="https://d3js.org/d3-color.v1.min.js"></script>
+		<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+		<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 		<script>var contribs = JSON.parse('{{ contributors|safe }}');</script>
 		{% load static %}
 		<script src={% static "js/leach.js" %}></script>
+		
 		{% else %}
 		<h2>It seems there were no contributors for this repository</h2>
 		{% endif %}
