@@ -73,6 +73,9 @@ def dictify(commits):
 	return out
 
 def leach(request):
+	if not 'tok' in request.session or request.session['tok']:
+		redirect('index')
+
 	token = request.session['tok']
 	repo = request.GET['repo']
 	user = request.session['user']
