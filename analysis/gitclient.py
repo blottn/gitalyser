@@ -40,10 +40,10 @@ def get_all_commits(access_token, u_name):
 
 #get the commits data for a single repo
 def get_commits(access_token, repo, owner):
-	 payload = {'access_token':access_token}
-	 result = json.loads(requests.get(COMMITS_ENDPOINT + '/' + owner + '/' + repo + '/commits'
-		 								,params=payload).text)
-	 return result
+	payload = {'access_token':access_token}
+	url = COMMITS_ENDPOINT + '/' + owner + '/' + repo + '/commits'
+	result = json.loads(requests.get(url ,params=payload).text)
+	return result
 
 def get_contribs(access_token,owner,repo):
 	payload = {'access_token':access_token}

@@ -80,12 +80,28 @@ def leach(request):
 
 	context = {}
 	context['repo_name'] = repo
-	context_contribs = []
 	context['contributors'] = []
-	contribs = get_contribs(token,owner,repo)
-	for contrib in contribs:
-		cpr = get_cpr(token,contrib['login'])
-		context_contribs.append({'name':contrib['login'],'value':cpr})
-	context['contributors'] = json.dumps(context_contribs);
+	commits = get_commits(token,repo,owner)
+	authors = {}
+	for commit in commits:
+		if commit['author'] != None:
+			if commit['author']['login'] in authors:
+				authors[commit['author']['login']] += 1
+			else:
+				authors[commit['author']['login']] = 0
+
+	#now scale between 100 and 0 for each
+	scale = 100
+	max_v = 0
+	for key in authors:
+		if authors[key] > max_v:
+			max_v = authors[key]
 	
+	for key in authors:
+		authors[key] /= float(max_v)
+		authors[key] *= scale
+		
+	for key in authors:
+		context['contributors'].append({'name':key,'value':authors[key]})
+	context['contributors'] = json.dumps(context['contributors'])
 	return render(request,'analysis/leach.html',context)

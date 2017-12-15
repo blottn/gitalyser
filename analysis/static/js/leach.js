@@ -1,10 +1,9 @@
-var width = 960;
-var height = 960;
+var width = 600;
+var height = 600;
 
 data = {}
 data.name = "Leaches"
 data.children = contribs;
-
 
 var root = d3.hierarchy(data);
 
@@ -31,4 +30,4 @@ node.append("circle")
 node.append("text")
 	.attr("dy",".3em")
 	.style("text-anchor", "middle")
-	.text(function(d) { return d.data.name;});
+	.text(function(d) { return d.data.value > 5 ? d.data.name : "";});
